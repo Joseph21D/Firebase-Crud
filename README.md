@@ -1,17 +1,31 @@
-# crud
+# Flutter Firebase CRUD App
+![enter image description here](https://miro.medium.com/v2/resize:fit:720/format:webp/1*eL-dHo08RwyLYOl17DNTog.png)
+Este es un proyecto de ejemplo de una aplicación Flutter que implementa las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) conectadas a Firebase para gestionar nombres y apellidos de usuarios.
 
-A new Flutter project.
+## Descripción
 
-## Getting Started
+La aplicación permite a los usuarios realizar las siguientes operaciones:
 
-This project is a starting point for a Flutter application.
+- Crear un nuevo usuario con su nombre y apellido.
+- Leer la lista de usuarios existentes.
+- Actualizar el nombre o apellido de un usuario existente.
+- Eliminar un usuario de la lista.
 
-A few resources to get you started if this is your first Flutter project:
+## Tecnologías Utilizadas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter: SDK de Google para construir aplicaciones nativas multiplataforma.
+- Firebase: Plataforma de desarrollo de aplicaciones móviles y web desarrollada por Firebase y adquirida por Google.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Firebase-Crud
+## Requisitos Previos
+
+Antes de ejecutar la aplicación, asegúrate de tener instalado lo siguiente:
+
+- Flutter SDK: [Instrucciones de instalación](https://flutter.dev/docs/get-started/install)
+- Firebase Project: Crea un proyecto en Firebase y configura tu aplicación de Flutter para usar Firebase. [Firebase Console](https://console.firebase.google.com/)
+
+## Configuración
+
+1. Clona este repositorio:
+
+```bash
+git clone https://github.com/Joseph21D/Firebase-Crud.git
