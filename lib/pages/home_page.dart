@@ -1,4 +1,5 @@
-import 'package:crud/services/firebase_service.dart';
+import 'package:crud/pages/image_page.dart';
+import 'package:crud/pages/users_page.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -11,108 +12,42 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final screen = [const UsersPage(), const ImagePage()];
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Center(
-          child: Text(
-            'Firebase Crud',
-            style: TextStyle(color: Colors.white),
-          ),
-        ) 
+      body: IndexedStack(
+        index: selectedIndex,
+        children: screen,
       ),
-      body: FutureBuilder(
-        future: getPeople(), 
-        builder: ((context, snapshot){
-          if (snapshot.hasData){
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index){
-                  return Dismissible(
-                    onDismissed: (direction) async {
-                      await deletePeople(snapshot.data?[index]['uid']);
-                      snapshot.data?.removeAt(index);
-                    },
-                    confirmDismiss: (direction) async {
-                      bool result = false;
-                      result = await showDialog(
-                        context: context, 
-                        builder: (context){
-                        return AlertDialog(
-                          title: Text("Are you sure you want to eliminate ${snapshot.data?[index]['name']} ?"),
-                          actions: [
-                            TextButton(
-                              onPressed: (){
-                                return Navigator.pop(
-                                  context,
-                                  false
-                                );
-                              }, 
-                              child: const Text(
-                                'Cancel',
-                                style: TextStyle(color: Colors.red),  
-                              )
-                            ),
-                            TextButton(
-                              onPressed: (){
-                                return Navigator.pop(
-                                  context,
-                                  true
-                                );
-                              }, 
-                              child: const Text('Confirm')
-                            ),
-                          ],
-                        );
-                        }
-                      );
-                      return result;
-                    },
-                    background: Container(
-                      color: Colors.red,
-                      child: const Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                      ),
-                    ),
-                    direction: DismissDirection.endToStart,
-                    key: Key(snapshot.data?[index]['uid']),
-                    child: ListTile(
-                      title: Text('${snapshot.data?[index]['name']} ${snapshot.data?[index]['surname']}'),
-                      onTap: () async {
-                        await Navigator.pushNamed(context, '/edit', arguments: {
-                          'name':snapshot.data?[index]['name'],
-                          'surname': snapshot.data?[index]['surname'],
-                          'uid':snapshot.data?[index]['uid'],
-                        });
-                        setState(() {});
-                      },
-                    ),
-                  );
-                },
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        })
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () async {
-          await Navigator.pushNamed(context, '/add');
-          setState(() {});
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: colors.primary,
+        currentIndex: selectedIndex,
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
         },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        elevation: 0,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: 'Users',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.image_outlined),
+            activeIcon: Icon(Icons.image),
+            label: 'Image',
+          ),
+        ],
+        selectedItemColor: Colors.white, // Cambia esto al color que desees
+        unselectedItemColor: Colors.black54,
       ),
     );
   }
